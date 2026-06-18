@@ -104,7 +104,7 @@ Upgrade this Java project from Java 11 to Java 17.
 5. Update Hibernate from 5.x to 6.x
 6. Replace any deprecated Java 11 APIs with Java 17 equivalents
 7. Update any remaining dependency versions for Java 17 compatibility
-8. Run mvn -P FASTINSTALL install to verify the build compiles
+8. Run mvn -P FASTINSTALL,ALLMODULES install to verify the build compiles
 9. Fix any compilation errors iteratively until the build passes
 
 ## Important
@@ -169,13 +169,15 @@ Walk through:
 ### Prerequisites
 - GitHub account with fork permissions
 - Devin account with active subscription ([app.devin.ai](https://app.devin.ai))
-- Java 11 JDK installed locally (for verifying the baseline build)
-- Java 17 JDK installed locally (for verifying the upgraded build)
-- Maven 3.8+ installed locally
+- Java 17 JDK installed locally (required to build — the project enforces JDK 17 even though it targets Java 11)
+- Maven 3.6.3+ installed locally
 
 ### Step 1: Fork and Prepare the Repository
 
+> **ALREADY DONE:** The hapi-fhir 6.1.0 codebase has been pushed to `ryanklepser/Java-Demo` on the `java-11-baseline` branch.
+
 ```bash
+# If starting from scratch:
 # 1. Fork hapifhir/hapi-fhir on GitHub (use the GitHub UI)
 # 2. Clone your fork
 git clone https://github.com/<your-username>/hapi-fhir.git
@@ -194,14 +196,16 @@ git push origin java-11-baseline
 ### Step 2: Verify the Baseline Builds
 
 ```bash
-# Ensure JAVA_HOME points to Java 11
-export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+# Ensure JAVA_HOME points to Java 17 (required by enforcer plugin even for Java 11 target code)
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64  # Linux
+# or: export JAVA_HOME=$(/usr/libexec/java_home -v 17)  # macOS
 
-# Run the fast build (skip tests — full test suite takes 1+ hour)
-mvn -P FASTINSTALL install
+# Run the fast build — MUST activate both FASTINSTALL and ALLMODULES profiles
+# (ALLMODULES is activeByDefault but gets deactivated when -P is used)
+mvn -P FASTINSTALL,ALLMODULES install
 
-# Expected: BUILD SUCCESS
-# This confirms the 6.1.0 baseline compiles on Java 11
+# Expected: BUILD SUCCESS (51 modules, ~5 min on first run)
+# Verified: All 61 artifacts (including sub-modules) build successfully
 ```
 
 ### Step 3: Configure Devin Environment
@@ -216,8 +220,7 @@ mvn -P FASTINSTALL install
    - Add a repo-level blueprint for your fork:
    ```yaml
    initialize:
-     - apt-get update && apt-get install -y openjdk-11-jdk openjdk-17-jdk maven
-     - update-java-alternatives -s java-1.11.0-openjdk-amd64
+     - apt-get update && apt-get install -y openjdk-17-jdk maven
    ```
 
 3. **Pre-build a Devin Playbook** (optional — for polished demos):
