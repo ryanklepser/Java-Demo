@@ -21,16 +21,18 @@ Centene operates one of the largest healthcare IT organizations in the U.S. Thei
 
 ## Mock Demo Stakeholders (Roles to Play)
 
-| # | Role | Name (suggested) | Key Concerns |
-|---|------|-------------------|--------------|
-| 1 | **SVP, CTO — Technology Advancement** | "John" | AI ROI, developer velocity metrics, strategic modernization roadmap, how Devin fits into their existing SDLC. Wants to see time-to-completion data and parallelization across services. |
-| 2 | **SVP & CIO — Markets & Health Products** | "Ajoy" | Risk mitigation for production systems, impact on sprint velocity during migration, rollback strategy, compliance with Centene's change management process. Needs to justify budget. |
-| 3 | **Sr. Director, Information Security** | "Maria" | Java 11 EOL CVE exposure, HIPAA audit implications, security of AI-generated code, data residency (does Devin see PHI?), javax→jakarta security class changes, SOC 2 compliance of Devin platform. |
+| # | Role | Person | Key Concerns |
+|---|------|--------|--------------|
+| 1 | **Economic Buyer** — SVP & CIO, Markets & Health Products | [Ajoy Kodali](https://www.linkedin.com/in/ajoy-kodali/) | Budget justification, risk mitigation for production systems, impact on sprint velocity during migration, rollback strategy, compliance with Centene's change management process. Oversees technology for Medicaid, Marketplace, Medicare, and Shared Services — needs to see ROI and cost model. |
+| 2 | **Champion** — VP of Engineering | [Haseeb Iqbal](https://www.linkedin.com/in/haseeb-i-cto-vp-eng/) | Developer velocity, AI ROI, strategic modernization roadmap, how Devin fits into their existing SDLC. Responsible for Product Development, QA, DevOps, and TechOps. Wants to see time-to-completion data and parallelization across services. Your internal advocate — make him look good. |
+| 3 | **Risk Gatekeeper + Security** — Senior Cyber Risk Analyst | [Ethan Suttles-Monzón](https://www.linkedin.com/in/ethansuttles/) | Java 11 EOL CVE exposure, HIPAA audit implications, security of AI-generated code, data residency (does Devin see PHI?), javax→jakarta security class changes, SOC 2 compliance of Devin platform. Leads Continuous Assessment & Monitoring (CAM) program and in-house penetration testing — will probe deeply on security posture. |
+| 4 | **End User** — Senior Application Software Engineer | [John Shehata](https://www.linkedin.com/in/john-shehata-808a3925/) | Day-to-day developer experience, how Devin integrates with his workflow (Angular/.NET/Oracle stack on Medicare Enrollment systems), code quality of generated output, whether Devin can handle real-world complexity. The person who will actually use Devin — needs to trust the tool. |
 
 **Dynamics to expect:**
-- "John" (CTO) will be most enthusiastic — lean into developer productivity and AI-augmented engineering
-- "Ajoy" (CIO) will ask about cost, timeline, and organizational impact — have TCO comparisons ready
-- "Maria" (Security) will probe on data handling, code review process, and whether Devin modifies security/auth classes — emphasize Devin's configurable guardrails and that all changes go through standard PR review
+- **Haseeb** (Champion/VP Eng) will be your strongest advocate — arm him with velocity metrics and ROI data he can use internally. Show how Devin makes his engineering org more productive.
+- **Ajoy** (Economic Buyer/CIO) controls the budget — quantify cost savings clearly. "200 engineer-weeks → 20 engineer-weeks of review." Have TCO comparisons ready.
+- **Ethan** (Security) will probe on data handling, code review process, and whether Devin modifies security/auth classes — emphasize Devin's configurable guardrails and that all changes go through standard PR review. He runs pen tests internally, so be prepared for detailed security questions.
+- **John** (End User) needs to see that the output is high-quality code he'd be comfortable reviewing and merging. Show the PR diff and emphasize it fits into his normal GitHub workflow.
 
 ---
 
@@ -156,11 +158,13 @@ Walk through:
 
 #### Step 5: Address the Security Question (2 min)
 
-> "Maria, I know you're thinking about security. A few things to note:
+> "Ethan, I know you're thinking about security. A few things to note:
 > 1. Devin was instructed NOT to touch security classes — and it respected that constraint. You can verify in the diff.
 > 2. All changes are in a PR — nothing goes to production without human review.
 > 3. Devin runs in an isolated environment. It accesses your repo through standard Git — it doesn't have access to your production systems or data.
 > 4. Devin is SOC 2 Type II compliant. We can share our security documentation."
+>
+> "John, as a developer — what do you think of this PR? Is this code you'd be comfortable reviewing and merging?"
 
 ---
 
@@ -254,24 +258,33 @@ mvn -P FASTINSTALL,ALLMODULES install
 
 ## Key Talking Points by Stakeholder
 
-### For the CTO ("John")
-- **Developer velocity:** "Your 300+ app dev engineers spend weeks on manual upgrade work. Devin parallelizes this — run 10 services simultaneously, get PRs for all of them overnight."
+### For the Champion — Haseeb (VP Engineering)
+- **Developer velocity:** "Your engineering org spends weeks on manual upgrade work. Devin parallelizes this — run 10 services simultaneously, get PRs for all of them overnight."
 - **Scale:** "This isn't a copilot that helps one developer type faster. This is an autonomous agent that takes tickets off your backlog."
-- **Adoption:** "Devin integrates into your existing workflow — GitHub PRs, CI/CD, code review. No new tools to learn."
+- **Adoption:** "Devin integrates into your existing workflow — GitHub PRs, CI/CD, code review. No new tools for your team to learn."
+- **Internal win:** "Imagine presenting to leadership that your team modernized 50 services in 2 weeks instead of 6 months. Devin makes your org look great."
 - **Competitive reference:** Other Fortune 50 healthcare organizations are already using AI-assisted code modernization to hit their Java 17 deadlines ahead of schedule.
 
-### For the CIO ("Ajoy")
+### For the Economic Buyer — Ajoy (SVP & CIO)
 - **Cost model:** "Compare the cost of Devin licenses vs. the engineering hours saved. A manual upgrade of 50 Java services at 4 weeks each = 200 engineer-weeks. Devin can reduce that to 20 engineer-weeks of review."
 - **Risk mitigation:** "Every change goes through your existing PR review, CI, and security scanning. Devin doesn't bypass your process — it accelerates it."
 - **Rollback:** "Each upgrade is a PR. If something breaks, revert the PR. No different from any other code change."
 - **Phased rollout:** "Start with 5 non-critical services. Measure results. Then expand."
+- **Budget justification:** "This isn't a one-time cost for a one-time migration. Java 21 is next. Spring Boot 4 is coming. Devin pays for itself continuously."
 
-### For the Security Director ("Maria")
+### For the Risk Gatekeeper — Ethan (Senior Cyber Risk Analyst)
 - **Data handling:** "Devin accesses your code through GitHub — the same permissions model your developers use. It doesn't access production databases, PHI, or internal networks."
 - **SOC 2:** "Devin is SOC 2 Type II certified. We can provide our security whitepaper and respond to your vendor security questionnaire."
 - **Code guardrails:** "As you saw in the demo, we instructed Devin not to modify security classes — and it complied. You can enforce these constraints via playbooks and knowledge notes."
-- **Audit trail:** "Every Devin session has a full transcript — every file read, every command run, every decision made. Complete auditability."
+- **Audit trail:** "Every Devin session has a full transcript — every file read, every command run, every decision made. Complete auditability for your CAM program."
+- **Pen test ready:** "Devin runs in isolated environments. We're happy to support your team's security assessment process."
 - **javax→jakarta security impact:** "The namespace migration from javax.security to jakarta.security is a mechanical change. Devin flags these for human review rather than auto-applying them."
+
+### For the End User — John (Senior Application Software Engineer)
+- **Code quality:** "Look at this PR diff — it's clean, follows existing patterns, and respects the project's conventions. This is code you'd be comfortable reviewing."
+- **Workflow fit:** "Devin creates standard GitHub PRs. You review them the same way you review any other PR from a teammate. No new tools."
+- **Time savings:** "Instead of spending 3 weeks doing find-and-replace across pom.xml files and Java imports, you spend 2 hours reviewing a PR. That's time back for the work you actually want to do."
+- **Trust:** "You stay in control. Nothing merges without your approval. Devin is a junior engineer that does the tedious work so you can focus on architecture and design."
 
 ---
 
@@ -291,7 +304,7 @@ mvn -P FASTINSTALL,ALLMODULES install
 
 **Subject:** Devin Demo for Centene — Java Modernization at Scale
 
-Hi [CTO/CIO/Security Lead names],
+Hi Ajoy, Haseeb, Ethan, and John,
 
 Thank you for your time today. As discussed, here's a summary of what we covered:
 
