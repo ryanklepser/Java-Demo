@@ -72,19 +72,19 @@
 
 ### 1D. Launch via Playbook (~60 sec)
 
-**[Switch back to Devin — open a new session on `ryanklepser/Java-Demo`]**
+**[Switch back to Devin — start a new session on `ryanklepser/Java-Demo`]**
 
 > SAY: "Now let's kick it off. But instead of typing a prompt from scratch, I want to show you something."
 
-**[Click on "Playbooks" in the Devin sidebar]**
+**[In the new session input area, look for the playbook attachment option — click "Team" playbooks]**
 
-> SAY: "These are Playbooks — reusable, standardized procedures that your team defines once and runs across every repo. Think of them as codified engineering runbooks."
+> SAY: "These are Playbooks — reusable, standardized procedures that your team defines once and runs across any repo. Think of them as codified engineering runbooks."
 
-**[Click on the "Java 11 → 17 Upgrade" playbook]**
+**[Select "Java 11 → 17 Upgrade" — it appears as a blue tag attached to the session]**
 
 > SAY: "We've built a Java 11 to 17 upgrade playbook. Let me walk you through what's in it."
 
-**[Briefly scroll through the playbook content so the room can see the structure]**
+**[Click the blue playbook tag to expand/preview the content so the room can see the structure]**
 
 > SAY: "It's structured like a well-written Jira ticket — numbered steps, clear acceptance criteria. Update all pom.xml files, migrate javax to jakarta, upgrade Spring and Hibernate, run the build, fix errors iteratively. And notice the constraints at the bottom: don't touch security classes, don't touch database migrations. These are enforced guardrails."
 
@@ -92,7 +92,7 @@
 
 > TO AJOY: "From a governance perspective, you're standardizing how upgrades are done across the org. One playbook, one process, fully auditable."
 
-**[Click "Run" on the playbook — select the Java-Demo repo if prompted]**
+**[Hit Submit to launch the session with the playbook attached]**
 
 > SAY: "One click. It's running. Let's watch."
 
