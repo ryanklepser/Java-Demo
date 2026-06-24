@@ -935,7 +935,7 @@
 			<dependency>
 				<groupId>org.simplejavamail</groupId>
 				<artifactId>simple-java-mail</artifactId>
-				<version>6.6.1</version>
+				<version>8.12.6</version>
 			</dependency>
 			<dependency>
 				<groupId>com.icegreen</groupId>
